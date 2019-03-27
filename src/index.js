@@ -1,6 +1,4 @@
 import Cesium from 'cesium/Cesium';
-import $ from 'jquery';
-// import position from './static/position.json';
 
 require('cesium/Widgets/widgets.css');
 require('./css/main.css');
@@ -12,20 +10,20 @@ var towers = [{
     "lng": 119.806319,
     "lat": 30.737467
 }, {
-    "lng": 119.816319,
+    "lng": 119.807319,
+    "lat": 30.738467
+}, {
+    "lng": 119.808319,
     "lat": 30.737467
 }, {
-    "lng": 119.826319,
-    "lat": 30.737467
-}, {
-    "lng": 119.836319,
+    "lng": 119.809319,
     "lat": 30.737467
 }];
 
 var viewer = new Cesium.Viewer('cesiumContainer');
 viewer.terrainProvider = Cesium.createWorldTerrain();
 viewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(towers[0].lng, towers[0].lat, 1000),
+    destination: Cesium.Cartesian3.fromDegrees(towers[0].lng, towers[0].lat, 300),
     duration: 2
 });
 let carto_positions = [];
