@@ -3,6 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopywebpackPlugin = require('copy-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // The path to the CesiumJS source code
 const cesiumSource = 'node_modules/cesium/Source';
 const cesiumWorkers = '../Build/Cesium/Workers';
@@ -35,13 +36,29 @@ module.exports = {
     module: {
         rules: [{
             test: /\.css$/,
-            use: [ 'style-loader', 'css-loader' ]
+            use: [ 'style-loader', {
+                loader: 'css-loader'                
+            }]
         }, {
             test: /\.(png|gif|jpg|jpeg|svg|xml|json)$/,
             use: [ 'url-loader' ]
+        },
+        // Strip cesium pragmas
+        {
+            test: /\.js$/,
+            enforce: 'pre',
+            include: path.resolve(__dirname, cesiumSource),
+            use: [{
+                loader: 'strip-pragma-loader',
+                options: {
+                    pragmas: {
+                        debug: false
+                    }
+                }
+            }]
         }]
     },
-    plugins: [
+    plugins: [        
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         }),
@@ -55,7 +72,12 @@ module.exports = {
         new webpack.DefinePlugin({
             // Define relative base path in cesium for loading assets
             CESIUM_BASE_URL: JSON.stringify('')
-        })
+        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'cesium',
+        //     minChunks: module => module.context && module.context.indexOf('cesium') !== -1
+        // }),
+        // new webpack.optimize.UglifyJsPlugin()
     ],
     devServer: {
         contentBase: path.join(__dirname, "dist")
