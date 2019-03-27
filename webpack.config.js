@@ -40,24 +40,32 @@ module.exports = {
                 loader: 'css-loader'                
             }]
         }, {
-            test: /\.(png|gif|jpg|jpeg|svg|xml|json)$/,
+            test: /\.(png|gif|jpg|jpeg|svg|xml|gltf|glb)$/,
             use: [ 'url-loader' ]
-        },
-        // Strip cesium pragmas
-        {
-            test: /\.js$/,
-            enforce: 'pre',
-            include: path.resolve(__dirname, cesiumSource),
+        },{
+            type: 'javascript/auto',
+            test: /\.json$/,
+            exclude: /(node_modules|bower_componnets)/,
             use: [{
-                loader: 'strip-pragma-loader',
-                options: {
-                    pragmas: {
-                        debug: false
-                    }
-                }
-            }]
-        }]
-    },
+                loader: 'file-loader',
+                options: {name: '[name].[ext]'}
+            }],
+        }
+        // // Strip cesium pragmas
+        // {
+        //     test: /\.js$/,
+        //     enforce: 'pre',
+        //     include: path.resolve(__dirname, cesiumSource),
+        //     use: [{
+        //         loader: 'strip-pragma-loader',
+        //         options: {
+        //             pragmas: {
+        //                 debug: false
+        //             }
+        //         }
+        //     }]
+        // }]
+        ]},
     plugins: [        
         new HtmlWebpackPlugin({
             template: 'src/index.html'
@@ -68,6 +76,7 @@ module.exports = {
         // Copy Cesium Assets, Widgets, and Workers to a static directory
         new CopywebpackPlugin([ { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' } ]),
         new CopywebpackPlugin([ { from: path.join(cesiumSource, 'Assets'), to: 'Assets' } ]),
+        new CopywebpackPlugin([ { from: 'src/static', to: 'static' } ]),
         new CopywebpackPlugin([ { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' } ]),
         new webpack.DefinePlugin({
             // Define relative base path in cesium for loading assets
