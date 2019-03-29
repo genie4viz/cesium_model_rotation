@@ -7,20 +7,21 @@ require('./css/main.css');
 // console.log(position, "from json");
 
 var towers = [{
-    "lng": 119.806319,
+    "lng": 29.806319,
     "lat": 30.737467
 }, {
-    "lng": 119.807319,
+    "lng": 29.807319,
     "lat": 30.738467
 }, {
-    "lng": 119.808319,
+    "lng": 29.808319,
     "lat": 30.737467
 }, {
-    "lng": 119.809319,
+    "lng": 29.809319,
     "lat": 30.737467
 }];
 
 var viewer = new Cesium.Viewer('cesiumContainer');
+
 viewer.terrainProvider = Cesium.createWorldTerrain();
 viewer.camera.flyTo({
     destination: Cesium.Cartesian3.fromDegrees(towers[0].lng, towers[0].lat, 300),
@@ -109,11 +110,26 @@ Cesium.sampleTerrainMostDetailed(
         add_el_tower(towers[i]);
     }
     let x_b_dist = 0.0001536, y_b_dist = 0.000021, z_b_dist = 65;
-    let lines = [];
+    let lines = [], main_lines = [];
     for (let i = 0; i < towers.length; i++) {
         let line = [];
+        
         let d_lng = Math.sin(towers[i].radian) * x_b_dist;
         let d_lat = Math.cos(towers[i].radian) * x_b_dist;
+
+        let d_lng1 = d_lng - y_b_dist * Math.cos(towers[i].radian);
+        let d_lat1 = d_lat + y_b_dist * Math.sin(towers[i].radian);
+        main_lines.push(d_lng1 + 1.0 * towers[i].lng);
+        main_lines.push(d_lat1 + 1.0 * towers[i].lat);
+        main_lines.push(z_b_dist + 1.0 * towers[i].z_pos);
+
+        let d_lng2 = d_lng + y_b_dist * Math.cos(towers[i].radian);
+        let d_lat2 = d_lat - y_b_dist * Math.sin(towers[i].radian);
+        main_lines.push(d_lng2+ 1.0 * towers[i].lng);
+        main_lines.push(d_lat2 + 1.0 * towers[i].lat);
+        main_lines.push(z_b_dist + 1.0 * towers[i].z_pos);
+
+        
         line.push(1.0 * towers[i].lng + d_lng);
         line.push(1.0 * towers[i].lat + d_lat);
         line.push(z_b_dist + 1.0 * towers[i].z_pos + 10);
@@ -124,6 +140,16 @@ Cesium.sampleTerrainMostDetailed(
 
         lines.push(line);
     }
+    viewer.entities.add({
+    id: "tower_line_main",
+    polyline: {
+        positions: new Cesium.Cartesian3.fromDegreesArrayHeights(
+        main_lines
+        ),
+        material: Cesium.Color.YELLOW,
+        width: 1            
+    }
+    });
     for (let p = 0; p < lines.length; p++) {
         viewer.entities.add({
           id: "tower_line_" + p,
