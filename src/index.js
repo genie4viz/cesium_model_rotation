@@ -23,6 +23,13 @@ var towers = [{
 var viewer = new Cesium.Viewer('cesiumContainer');
 
 viewer.terrainProvider = Cesium.createWorldTerrain();
+
+viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+
+var startTime = viewer.clock.startTime;
+var midTime = Cesium.JulianDate.addSeconds(startTime, 43200, new Cesium.JulianDate());
+var stopTime = Cesium.JulianDate.addSeconds(startTime, 86400, new Cesium.JulianDate());
+
 viewer.camera.flyTo({
     destination: Cesium.Cartesian3.fromDegrees(towers[0].lng, towers[0].lat, 300),
     duration: 2
@@ -112,33 +119,74 @@ Cesium.sampleTerrainMostDetailed(
     let x_b_dist = 0.0001536, y_b_dist = 0.000021, z_b_dist = 65;
     let lines = [], main_lines = [];
     for (let i = 0; i < towers.length; i++) {
-        let line = [];
+        // let line = [];
         
         let d_lng = Math.sin(towers[i].radian) * x_b_dist;
         let d_lat = Math.cos(towers[i].radian) * x_b_dist;
 
         let d_lng1 = d_lng - y_b_dist * Math.cos(towers[i].radian);
         let d_lat1 = d_lat + y_b_dist * Math.sin(towers[i].radian);
+        let prevPoint, curPoint;
+        if(i > 0){
+            prevPoint = [d_lng1 + 1.0 * towers[i - 1].lng, d_lat1 + 1.0 * towers[i - 1].lat, z_b_dist + 1.0 * towers[i - 1].z_pos];
+            curPoint = [d_lng1 + 1.0 * towers[i].lng, d_lat1 + 1.0 * towers[i].lat, z_b_dist + 1.0 * towers[i].z_pos];
+            // Create a straight-line path.
+            var property = new Cesium.SampledPositionProperty();
+            var startPosition = Cesium.Cartesian3.fromDegrees(prevPoint[0], prevPoint[1], prevPoint[2]);
+            property.addSample(startTime, startPosition);
+            var stopPosition = Cesium.Cartesian3.fromDegrees(curPoint[0], curPoint[1], curPoint[2]);
+            property.addSample(stopTime, stopPosition);
+
+            // Find the midpoint of the straight path, and raise its altitude.
+            var midPoint = Cesium.Cartographic.fromCartesian(property.getValue(midTime));
+            midPoint.height = (prevPoint[2] + curPoint[2])/2 - 20 ;
+            var midPosition = viewer.scene.globe.ellipsoid.cartographicToCartesian(
+                midPoint, new Cesium.Cartesian3());
+
+            // Redo the path to be the new arc.
+            property = new Cesium.SampledPositionProperty();
+            property.addSample(startTime, startPosition);
+            property.addSample(midTime, midPosition);
+            property.addSample(stopTime, stopPosition);
+
+            // Create an Entity to show the arc.
+            var arcEntity = viewer.entities.add({
+                position : property,        
+                // This path shows the arc as a polyline.
+                path : {
+                    resolution : 500,
+                    color : Cesium.Color.YELLOW,
+                    width : 5,
+                    leadTime: 1e10,
+                    trailTime: 1e10
+                }
+            });
+
+            // This is where it becomes a smooth path.
+            arcEntity.position.setInterpolationOptions({
+                interpolationDegree : 5,
+                interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
+            });
+        }
         main_lines.push(d_lng1 + 1.0 * towers[i].lng);
         main_lines.push(d_lat1 + 1.0 * towers[i].lat);
         main_lines.push(z_b_dist + 1.0 * towers[i].z_pos);
+        // let d_lng2 = d_lng + y_b_dist * Math.cos(towers[i].radian);
+        // let d_lat2 = d_lat - y_b_dist * Math.sin(towers[i].radian);
+        // main_lines.push(d_lng2+ 1.0 * towers[i].lng);
+        // main_lines.push(d_lat2 + 1.0 * towers[i].lat);
+        // main_lines.push(z_b_dist + 1.0 * towers[i].z_pos);
 
-        let d_lng2 = d_lng + y_b_dist * Math.cos(towers[i].radian);
-        let d_lat2 = d_lat - y_b_dist * Math.sin(towers[i].radian);
-        main_lines.push(d_lng2+ 1.0 * towers[i].lng);
-        main_lines.push(d_lat2 + 1.0 * towers[i].lat);
-        main_lines.push(z_b_dist + 1.0 * towers[i].z_pos);
+        //drawing for center line of each tower
+        // line.push(1.0 * towers[i].lng + d_lng);
+        // line.push(1.0 * towers[i].lat + d_lat);
+        // line.push(z_b_dist + 1.0 * towers[i].z_pos + 10);
 
-        
-        line.push(1.0 * towers[i].lng + d_lng);
-        line.push(1.0 * towers[i].lat + d_lat);
-        line.push(z_b_dist + 1.0 * towers[i].z_pos + 10);
+        // line.push(1.0 * towers[i].lng - d_lng);
+        // line.push(1.0 * towers[i].lat - d_lat);
+        // line.push(z_b_dist + 1.0 * towers[i].z_pos + 10);
 
-        line.push(1.0 * towers[i].lng - d_lng);
-        line.push(1.0 * towers[i].lat - d_lat);
-        line.push(z_b_dist + 1.0 * towers[i].z_pos + 10);
-
-        lines.push(line);
+        // lines.push(line);
     }
     viewer.entities.add({
     id: "tower_line_main",
@@ -150,18 +198,20 @@ Cesium.sampleTerrainMostDetailed(
         width: 1            
     }
     });
-    for (let p = 0; p < lines.length; p++) {
-        viewer.entities.add({
-          id: "tower_line_" + p,
-          polyline: {
-            positions: new Cesium.Cartesian3.fromDegreesArrayHeights(
-              lines[p]
-            ),
-            material: Cesium.Color.RED,
-            width: 1            
-          }
-        });
-      }
+
+    //draw center line for each tower
+    // for (let p = 0; p < lines.length; p++) {
+    //     viewer.entities.add({
+    //       id: "tower_line_" + p,
+    //       polyline: {
+    //         positions: new Cesium.Cartesian3.fromDegreesArrayHeights(
+    //           lines[p]
+    //         ),
+    //         material: Cesium.Color.RED,
+    //         width: 1            
+    //       }
+    //     });
+    // }
     
 });
 
