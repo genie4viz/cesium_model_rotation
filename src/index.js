@@ -675,7 +675,7 @@ var el_tower_models = [
     },{
       name: "1000kV耐张-丰字",
       url: "./static/1000a.glb",
-      scale: 1,
+      scale: 0.12,
       units: [
         //only for left side
         // 0
@@ -928,9 +928,9 @@ Cesium.sampleTerrainMostDetailed(
         baseLine.push(1.0 *(towers[i].lat));
         baseLine.push(towers[i].z_pos);
 
-        // ready for draw lines
-
-        for (let k = 0; k < currentModel.units.length;k++) {
+        // // ready for draw lines
+        
+        for (let k = 0; k < currentModel.units.length; k++) {
           let x_b_dist =
             currentModel.units[k].x_b_dist;
           let y_b_dist =
@@ -938,12 +938,11 @@ Cesium.sampleTerrainMostDetailed(
           let z_b_dist =
             currentModel.units[k].z_b_dist;
           
-          //ksh
           let center = ComputeLatLng(towers[i].lat, towers[i].lng, towers[i].radian, x_b_dist);
           let right = ComputeLatLng(center[0], center[1], Math.PI / 2 + towers[i].radian , y_b_dist);
           let left =  ComputeLatLng(center[0], center[1], towers[i].radian - Math.PI / 2 , y_b_dist);              
           
-          // ready for input
+        //   ready for input
           if (!lines[k]) lines[k] = [];
           lines[k].push( left[1]);
           lines[k].push( left[0]);
@@ -967,7 +966,7 @@ Cesium.sampleTerrainMostDetailed(
               currentModel.units[p].color
             ),
             width: 1,
-            show: false
+            show: true
           }
         });
       }
@@ -987,36 +986,44 @@ function add_el_tower(el_tower) {
       );
 
       let currentModel = el_tower_models[6];//1000kV耐张-丰字
-      console.log(el_tower, currentModel, 'asadfasdf')
+      
       viewer.entities.add({
         id: el_tower.id,
         position: position,
         orientation: orientation,
         model: {
-          uri: "./static/1000a.glb",
-          shadows: Cesium.ShadowMode.DISABLED,
-          color: el_tower.tower_color,
-          scale: currentModel.scale,
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
-            0,
-            main.cam_5K
-          )
-        },
-        label: {
-          show: false,
-          text: el_tower.towernumber,
-          font: "18px SimHei",
-          fillColor: Cesium.Color.BROWN,
-          outlineColor: Cesium.Color.WHITE,
-          outlineWidth: 3.0,
-          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-          pixelOffset: new Cesium.Cartesian2(0, 20),
-          disableDepthTestDistance: Number.POSITIVE_INFINITY,
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
-            0,
-            main.cam_5K
-          )
+          uri: currentModel.url,
+          color: Cesium.Color.AQUA,
+          scale: currentModel.scale
         }
       });
+}
+function ComputeLatLng(vLatitude, vLongitude, vAngle, vDistance) {
+    var vNewLatLng = [];
+    vDistance = vDistance / (6371 * 1000);
+    // vAngle = ToRad(vAngle);
+
+    var vLat1 = ToRad(vLatitude);
+    var vLng1 = ToRad(vLongitude);
+
+    var vNewLat = Math.asin(Math.sin(vLat1) * Math.cos(vDistance) +
+                  Math.cos(vLat1) * Math.sin(vDistance) * Math.cos(vAngle));
+
+    var vNewLng = vLng1 + Math.atan2(Math.sin(vAngle) * Math.sin(vDistance) * Math.cos(vLat1),
+                          Math.cos(vDistance) - Math.sin(vLat1) * Math.sin(vNewLat));
+
+    if (isNaN(vNewLat) || isNaN(vNewLng)) {
+        return null;
+    }
+
+    vNewLatLng[0] = ToDeg(vNewLat);
+    vNewLatLng[1] = ToDeg(vNewLng);
+
+    return vNewLatLng;
+}
+function ToRad(vInput) {
+    return vInput * Math.PI / 180;
+}
+function ToDeg(vInput) {
+    return vInput * 180 / Math.PI;
 }
