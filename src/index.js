@@ -6,6 +6,808 @@ require('./css/main.css');
 // console.log (typeof position);
 // console.log(position, "from json");
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwZWU2Nzc3OS01MmQzLTRmNmItODVjOS0yOTE3YmU4N2U0ZDIiLCJpZCI6MTg0OTIsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NzM4OTMzODR9.Uo9uKORUxA_5h3LWZCyoIZlBRIq03w6FsQcCxq76Gic';
+var el_tower_models = [
+    {
+      name: "default",
+      url: "static/models/1.glb",
+      scale: 1,
+      units: [
+        //only for left side
+        // 0
+        {
+          x_b_dist: 17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: 16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: 17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //3
+        {
+          x_b_dist: 17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: 17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: 17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //only for right side
+        // 0
+        {
+          x_b_dist: -17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: -16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: -17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        {
+          x_b_dist: -17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: -17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: -17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        //white line
+        //left
+        {
+          x_b_dist: 12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#fff"
+        },
+        //right
+        {
+          x_b_dist: -12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#fff"
+        }
+      ]
+    },
+    {
+      name: "±500kV直线-T字",
+      url: "static/models/±500kV直线-T字.glb",
+      scale: 0.1,
+      units: [
+        //only for left side
+        // 0
+        {
+          x_b_dist: 17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: 16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: 17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //3
+        {
+          x_b_dist: 17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: 17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: 17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          color: "#ffff00"
+        },
+        // //only for right side
+        // 0
+        {
+          x_b_dist: -17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: -16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: -17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        {
+          x_b_dist: -17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: -17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: -17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          color: "#ffff00"
+        },
+        //white line
+        //left
+        {
+          x_b_dist: 12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          color: "#fff"
+        },
+        //right
+        {
+          x_b_dist: -12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          color: "#fff"
+        }
+      ]
+    },{
+      name: "±500kV耐张-T字",
+      url: "static/models/±500kV耐张-T字.glb",
+      scale: 0.1,
+      units: [
+        //only for left side
+        // 0
+        {
+          x_b_dist: 17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: 16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: 17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //3
+        {
+          x_b_dist: 17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: 17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: 17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          color: "#ffff00"
+        },
+        // //only for right side
+        // 0
+        {
+          x_b_dist: -17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: -16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: -17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        {
+          x_b_dist: -17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: -17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: -17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          color: "#ffff00"
+        },
+        //white line
+        //left
+        {
+          x_b_dist: 12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          color: "#fff"
+        },
+        //right
+        {
+          x_b_dist: -12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          color: "#fff"
+        }
+      ]
+    },{
+      name: "±800kV直线-T字",
+      url: "static/models/±800kV直线-T字.glb",
+      scale: 0.1,
+      units: [
+        //only for left side
+        // 0
+        {
+          x_b_dist: 17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: 16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: 17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //3
+        {
+          x_b_dist: 17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: 17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: 17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          color: "#ffff00"
+        },
+        // //only for right side
+        // 0
+        {
+          x_b_dist: -17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: -16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: -17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        {
+          x_b_dist: -17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: -17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: -17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          color: "#ffff00"
+        },
+        //white line
+        //left
+        {
+          x_b_dist: 12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          color: "#fff"
+        },
+        //right
+        {
+          x_b_dist: -12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          color: "#fff"
+        }
+      ]
+    },{
+      name: "±800kV耐张-干字",
+      url: "static/models/±800kV耐张-干字.glb",
+      scale: 1,
+      units: [
+        //only for left side
+        // 0
+        {
+          x_b_dist: 17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: 16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: 17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //3
+        {
+          x_b_dist: 17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: 17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: 17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          color: "#ffff00"
+        },
+        // //only for right side
+        // 0
+        {
+          x_b_dist: -17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: -16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: -17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        {
+          x_b_dist: -17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: -17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: -17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          color: "#ffff00"
+        },
+        //white line
+        //left
+        {
+          x_b_dist: 12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          color: "#fff"
+        },
+        //right
+        {
+          x_b_dist: -12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          color: "#fff"
+        }
+      ]
+    },{
+      name: "1000kV直线-丰字",
+      url: "static/models/1000kV直线-丰字.glb",
+      scale: 0.1,
+      units: [
+        //only for left side
+        // 0
+        {
+          x_b_dist: 17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: 16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: 17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //3
+        {
+          x_b_dist: 17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: 17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: 17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          color: "#ffff00"
+        },
+        // //only for right side
+        // 0
+        {
+          x_b_dist: -17.05, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 64.403, 
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: -16.85, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: -17.15,
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        {
+          x_b_dist: -17.645, 
+          y_b_dist: 2, 
+          z_b_dist: 63.6,
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: -17.935, 
+          y_b_dist: 2, 
+          z_b_dist: 64.02,
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: -17.745, 
+          y_b_dist: 2, 
+          z_b_dist: 64.403,
+          color: "#ffff00"
+        },
+        //white line
+        //left
+        {
+          x_b_dist: 12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          color: "#fff"
+        },
+        //right
+        {
+          x_b_dist: -12.02, //meters
+          y_b_dist: 2, //meters
+          z_b_dist: 78.57,
+          color: "#fff"
+        }
+      ]
+    },{
+      name: "1000kV耐张-丰字",
+      url: "static/models/1000kV耐张-丰字.glb",
+      scale: 0.1,
+      units: [
+        //only for left side
+        // 0
+        {
+          x_b_dist: 5, //meters
+          y_b_dist: 0, //meters
+          z_b_dist: 64.403,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: 5, 
+          y_b_dist: 0, //meters
+          z_b_dist: 64.02,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: 5,
+          y_b_dist: 0, //meters
+          z_b_dist: 63.6,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //3
+        {
+          x_b_dist: 5, 
+          y_b_dist: 0, //meters
+          z_b_dist: 63.6,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: 5, 
+          y_b_dist: 0, //meters
+          z_b_dist: 64.02,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: 5, 
+          y_b_dist: 0, //meters
+          z_b_dist: 64.403,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //only for right side
+        // 0
+        {
+          x_b_dist: -5, //meters
+          y_b_dist: 0, //meters
+          z_b_dist: 64.403, 
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //1
+        {
+          x_b_dist: -5, 
+          y_b_dist: 0, //meters
+          z_b_dist: 64.02,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //2
+        {
+          x_b_dist: -5,
+          y_b_dist: 0, //meters
+          z_b_dist: 63.6,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        {
+          x_b_dist: -17.645, 
+          y_b_dist: 0, //meters
+          z_b_dist: 63.6,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //4
+        {
+          x_b_dist: -17.935, 
+          y_b_dist: 0, 
+          z_b_dist: 64.02,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        // //5
+        {
+          x_b_dist: -17.745, 
+          y_b_dist: 0, 
+          z_b_dist: 64.403,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#ffff00"
+        },
+        //white line
+        //left
+        {
+          x_b_dist: 12.02, //meters
+          y_b_dist: 0, //meters
+          z_b_dist: 78.57,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#fff"
+        },
+        //right
+        {
+          x_b_dist: -12.02, //meters
+          y_b_dist: 0, //meters
+          z_b_dist: 78.57,
+          think: 1,
+          pass: 1, // or 2, 1 : one point for each tower,  2 : two point for each tower
+          color: "#fff"
+        }
+      ]
+    }
+  ];
 var towers = [{
     "lng": 29.806319,
     "lat": 30.737467
@@ -24,11 +826,7 @@ var viewer = new Cesium.Viewer('cesiumContainer');
 
 viewer.terrainProvider = Cesium.createWorldTerrain();
 
-viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
 
-var startTime = viewer.clock.startTime;
-var midTime = Cesium.JulianDate.addSeconds(startTime, 43200, new Cesium.JulianDate());
-var stopTime = Cesium.JulianDate.addSeconds(startTime, 86400, new Cesium.JulianDate());
 
 viewer.camera.flyTo({
     destination: Cesium.Cartesian3.fromDegrees(towers[0].lng, towers[0].lat, 300),
@@ -106,112 +904,76 @@ Cesium.sampleTerrainMostDetailed(
     viewer.terrainProvider,
     carto_positions
 ).then(function (positions) {
-    for (let i = 0; i < towers.length; i++) {
+
+    //select model
+    let currentModel = el_tower_models[6];
+
+    let lines = [];
+    let temp_lines = [];
+    let baseLine = [];
+    for (var i = 0; i < towers.length; i++) {
+        // set towers addtional information
         towers[i].radian = getTowerDir(
-            towers[i - 1],
-            towers[i],
-            towers[i + 1]
-        );
-        towers[i].id = "tower" + i;
+          towers[i - 1],
+          towers[i],
+          towers[i + 1]
+        );            
         towers[i].z_pos = positions[i].height;
-        add_el_tower(towers[i]);
-    }
-    let x_b_dist = 0.0001536, y_b_dist = 0.000021, z_b_dist = 65;
-    let lines = [], main_lines = [];
-    for (let i = 0; i < towers.length; i++) {
-        // let line = [];
+                 
         
-        let d_lng = Math.sin(towers[i].radian) * x_b_dist;
-        let d_lat = Math.cos(towers[i].radian) * x_b_dist;
+        towers[i].tower_color = Cesium.Color.ALICEBLUE;
+        towers[i].id = "el_tower_on_line_" + towers[i].evid;
+        // draw towers
+        add_el_tower(towers[i]);
+        // ready for draw baseline
+        baseLine.push(1.0 *(towers[i].lng));
+        baseLine.push(1.0 *(towers[i].lat));
+        baseLine.push(towers[i].z_pos);
 
-        let d_lng1 = d_lng - y_b_dist * Math.cos(towers[i].radian);
-        let d_lat1 = d_lat + y_b_dist * Math.sin(towers[i].radian);
-        let prevPoint, curPoint;
-        if(i > 0){
-            prevPoint = [d_lng1 + 1.0 * towers[i - 1].lng, d_lat1 + 1.0 * towers[i - 1].lat, z_b_dist + 1.0 * towers[i - 1].z_pos];
-            curPoint = [d_lng1 + 1.0 * towers[i].lng, d_lat1 + 1.0 * towers[i].lat, z_b_dist + 1.0 * towers[i].z_pos];
-            // Create a straight-line path.
-            var property = new Cesium.SampledPositionProperty();
-            var startPosition = Cesium.Cartesian3.fromDegrees(prevPoint[0], prevPoint[1], prevPoint[2]);
-            property.addSample(startTime, startPosition);
-            var stopPosition = Cesium.Cartesian3.fromDegrees(curPoint[0], curPoint[1], curPoint[2]);
-            property.addSample(stopTime, stopPosition);
+        // ready for draw lines
 
-            // Find the midpoint of the straight path, and raise its altitude.
-            var midPoint = Cesium.Cartographic.fromCartesian(property.getValue(midTime));
-            midPoint.height = (prevPoint[2] + curPoint[2])/2 - 20 ;
-            var midPosition = viewer.scene.globe.ellipsoid.cartographicToCartesian(
-                midPoint, new Cesium.Cartesian3());
-
-            // Redo the path to be the new arc.
-            property = new Cesium.SampledPositionProperty();
-            property.addSample(startTime, startPosition);
-            property.addSample(midTime, midPosition);
-            property.addSample(stopTime, stopPosition);
-
-            // Create an Entity to show the arc.
-            var arcEntity = viewer.entities.add({
-                position : property,        
-                // This path shows the arc as a polyline.
-                path : {
-                    resolution : 500,
-                    color : Cesium.Color.YELLOW,
-                    width : 5,
-                    leadTime: 1e10,
-                    trailTime: 1e10
-                }
-            });
-
-            // This is where it becomes a smooth path.
-            arcEntity.position.setInterpolationOptions({
-                interpolationDegree : 5,
-                interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
-            });
+        for (let k = 0; k < currentModel.units.length;k++) {
+          let x_b_dist =
+            currentModel.units[k].x_b_dist;
+          let y_b_dist =
+            currentModel.units[k].y_b_dist;
+          let z_b_dist =
+            currentModel.units[k].z_b_dist;
+          
+          //ksh
+          let center = ComputeLatLng(towers[i].lat, towers[i].lng, towers[i].radian, x_b_dist);
+          let right = ComputeLatLng(center[0], center[1], Math.PI / 2 + towers[i].radian , y_b_dist);
+          let left =  ComputeLatLng(center[0], center[1], towers[i].radian - Math.PI / 2 , y_b_dist);              
+          
+          // ready for input
+          if (!lines[k]) lines[k] = [];
+          lines[k].push( left[1]);
+          lines[k].push( left[0]);
+          lines[k].push( z_b_dist + 1.0 * towers[i].z_pos);
+          lines[k].push( right[1]);
+          lines[k].push( right[0]);
+          lines[k].push( z_b_dist + 1.0 * towers[i].z_pos);
+         
         }
-        main_lines.push(d_lng1 + 1.0 * towers[i].lng);
-        main_lines.push(d_lat1 + 1.0 * towers[i].lat);
-        main_lines.push(z_b_dist + 1.0 * towers[i].z_pos);
-        // let d_lng2 = d_lng + y_b_dist * Math.cos(towers[i].radian);
-        // let d_lat2 = d_lat - y_b_dist * Math.sin(towers[i].radian);
-        // main_lines.push(d_lng2+ 1.0 * towers[i].lng);
-        // main_lines.push(d_lat2 + 1.0 * towers[i].lat);
-        // main_lines.push(z_b_dist + 1.0 * towers[i].z_pos);
+      }
 
-        //drawing for center line of each tower
-        // line.push(1.0 * towers[i].lng + d_lng);
-        // line.push(1.0 * towers[i].lat + d_lat);
-        // line.push(z_b_dist + 1.0 * towers[i].z_pos + 10);
-
-        // line.push(1.0 * towers[i].lng - d_lng);
-        // line.push(1.0 * towers[i].lat - d_lat);
-        // line.push(z_b_dist + 1.0 * towers[i].z_pos + 10);
-
-        // lines.push(line);
-    }
-    viewer.entities.add({
-    id: "tower_line_main",
-    polyline: {
-        positions: new Cesium.Cartesian3.fromDegreesArrayHeights(
-        main_lines
-        ),
-        material: Cesium.Color.YELLOW,
-        width: 1            
-    }
-    });
-
-    //draw center line for each tower
-    // for (let p = 0; p < lines.length; p++) {
-    //     viewer.entities.add({
-    //       id: "tower_line_" + p,
-    //       polyline: {
-    //         positions: new Cesium.Cartesian3.fromDegreesArrayHeights(
-    //           lines[p]
-    //         ),
-    //         material: Cesium.Color.RED,
-    //         width: 1            
-    //       }
-    //     });
-    // }
+      // draw lines
+      main.tower_line_entities = [];
+      for (let p = 0; p < lines.length; p++) {
+        main.tower_line_entities.push(main.__addEntities({
+          id: "el_tower_line_" + p,
+          polyline: {
+            positions: new Cesium.Cartesian3.fromDegreesArrayHeights(
+              lines[p]
+            ),
+            material: Cesium.Color.fromCssColorString(
+              currentModel.units[p].color
+            ),
+            width: 1,
+            show: false
+          }
+        }));
+      }
     
 });
 
@@ -220,21 +982,44 @@ function add_el_tower(el_tower) {
         el_tower.lng,
         el_tower.lat,
         el_tower.z_pos
-    );
-    let heading = el_tower.radian; //Cesium.Math.toRadians(tower.radian);
-    let hpr = new Cesium.HeadingPitchRoll(heading, 0, 0);
-    let orientation = Cesium.Transforms.headingPitchRollQuaternion(
+      );
+      let heading = el_tower.radian; //Cesium.Math.toRadians(tower.radian);
+      let hpr = new Cesium.HeadingPitchRoll(heading, 0, 0);
+      let orientation = Cesium.Transforms.headingPitchRollQuaternion(
         position, hpr
-    );
+      );
 
-    viewer.entities.add({
+      let currentModel = el_tower_models[6];//1000kV耐张-丰字
+      
+      viewer.entities.add({
         id: el_tower.id,
         position: position,
         orientation: orientation,
         model: {
-            uri: './static/1.glb',            
-            color: Cesium.Color.AQUA,
-            scale: 1
+          uri: currentModel.url,
+          shadows: Cesium.ShadowMode.DISABLED,
+          color: el_tower.tower_color,
+          scale: currentModel.scale,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
+            0,
+            main.cam_5K
+          )
+        },
+        label: {
+          show: false,
+          text: el_tower.towernumber,
+          font: "18px SimHei",
+          fillColor: Cesium.Color.BROWN,
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 3.0,
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+          pixelOffset: new Cesium.Cartesian2(0, 20),
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
+            0,
+            main.cam_5K
+          )
         }
-    });
+      });
 }
