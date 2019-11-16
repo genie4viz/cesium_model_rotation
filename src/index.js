@@ -9,7 +9,7 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOi
 var el_tower_models = [
     {
       name: "default",
-      url: "static/models/1.glb",
+      url: "1.glb",
       scale: 1,
       units: [
         //only for left side
@@ -144,7 +144,7 @@ var el_tower_models = [
     },
     {
       name: "±500kV直线-T字",
-      url: "static/models/±500kV直线-T字.glb",
+      url: "±500kV直线-T字.glb",
       scale: 0.1,
       units: [
         //only for left side
@@ -250,7 +250,7 @@ var el_tower_models = [
       ]
     },{
       name: "±500kV耐张-T字",
-      url: "static/models/±500kV耐张-T字.glb",
+      url: "±500kV耐张-T字.glb",
       scale: 0.1,
       units: [
         //only for left side
@@ -356,7 +356,7 @@ var el_tower_models = [
       ]
     },{
       name: "±800kV直线-T字",
-      url: "static/models/±800kV直线-T字.glb",
+      url: "±800kV直线-T字.glb",
       scale: 0.1,
       units: [
         //only for left side
@@ -462,7 +462,7 @@ var el_tower_models = [
       ]
     },{
       name: "±800kV耐张-干字",
-      url: "static/models/±800kV耐张-干字.glb",
+      url: "±800kV耐张-干字.glb",
       scale: 1,
       units: [
         //only for left side
@@ -568,7 +568,7 @@ var el_tower_models = [
       ]
     },{
       name: "1000kV直线-丰字",
-      url: "static/models/1000kV直线-丰字.glb",
+      url: "1000kV直线-丰字.glb",
       scale: 0.1,
       units: [
         //only for left side
@@ -674,7 +674,7 @@ var el_tower_models = [
       ]
     },{
       name: "1000kV耐张-丰字",
-      url: "static/models/1000kV耐张-丰字.glb",
+      url: "1000kV耐张-丰字.glb",
       scale: 0.1,
       units: [
         //only for left side
@@ -919,10 +919,8 @@ Cesium.sampleTerrainMostDetailed(
           towers[i + 1]
         );            
         towers[i].z_pos = positions[i].height;
-                 
-        
         towers[i].tower_color = Cesium.Color.ALICEBLUE;
-        towers[i].id = "el_tower_on_line_" + towers[i].evid;
+        towers[i].id = "el_tower_on_line_" + i;
         // draw towers
         add_el_tower(towers[i]);
         // ready for draw baseline
@@ -958,9 +956,8 @@ Cesium.sampleTerrainMostDetailed(
       }
 
       // draw lines
-      main.tower_line_entities = [];
       for (let p = 0; p < lines.length; p++) {
-        main.tower_line_entities.push(main.__addEntities({
+        viewer.entities.add({
           id: "el_tower_line_" + p,
           polyline: {
             positions: new Cesium.Cartesian3.fromDegreesArrayHeights(
@@ -972,7 +969,7 @@ Cesium.sampleTerrainMostDetailed(
             width: 1,
             show: false
           }
-        }));
+        });
       }
     
 });
@@ -990,7 +987,7 @@ function add_el_tower(el_tower) {
       );
 
       let currentModel = el_tower_models[6];//1000kV耐张-丰字
-      
+      console.log(el_tower, currentModel, 'asadfasdf')
       viewer.entities.add({
         id: el_tower.id,
         position: position,
