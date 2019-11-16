@@ -5,7 +5,7 @@ require('./css/main.css');
 
 // console.log (typeof position);
 // console.log(position, "from json");
-
+Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwZWU2Nzc3OS01MmQzLTRmNmItODVjOS0yOTE3YmU4N2U0ZDIiLCJpZCI6MTg0OTIsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NzM4OTMzODR9.Uo9uKORUxA_5h3LWZCyoIZlBRIq03w6FsQcCxq76Gic';
 var towers = [{
     "lng": 29.806319,
     "lat": 30.737467
