@@ -9,7 +9,7 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOi
 var el_tower_models = [
     {
       name: "default",
-      url: "1.glb",
+      url: "./static/1.glb",
       scale: 1,
       units: [
         //only for left side
@@ -144,7 +144,7 @@ var el_tower_models = [
     },
     {
       name: "±500kV直线-T字",
-      url: "±500kV直线-T字.glb",
+      url: "./static/±500kV直线-T字.glb",
       scale: 0.1,
       units: [
         //only for left side
@@ -250,7 +250,7 @@ var el_tower_models = [
       ]
     },{
       name: "±500kV耐张-T字",
-      url: "±500kV耐张-T字.glb",
+      url: "./static/±500kV耐张-T字.glb",
       scale: 0.1,
       units: [
         //only for left side
@@ -356,7 +356,7 @@ var el_tower_models = [
       ]
     },{
       name: "±800kV直线-T字",
-      url: "±800kV直线-T字.glb",
+      url: "./static/±800kV直线-T字.glb",
       scale: 0.1,
       units: [
         //only for left side
@@ -462,7 +462,7 @@ var el_tower_models = [
       ]
     },{
       name: "±800kV耐张-干字",
-      url: "±800kV耐张-干字.glb",
+      url: "./static/±800kV耐张-干字.glb",
       scale: 1,
       units: [
         //only for left side
@@ -568,7 +568,7 @@ var el_tower_models = [
       ]
     },{
       name: "1000kV直线-丰字",
-      url: "1000kV直线-丰字.glb",
+      url: "./static/1000kV直线-丰字.glb",
       scale: 0.1,
       units: [
         //only for left side
@@ -674,8 +674,8 @@ var el_tower_models = [
       ]
     },{
       name: "1000kV耐张-丰字",
-      url: "1000kV耐张-丰字.glb",
-      scale: 0.1,
+      url: "./static/1000a.glb",
+      scale: 1,
       units: [
         //only for left side
         // 0
@@ -993,7 +993,7 @@ function add_el_tower(el_tower) {
         position: position,
         orientation: orientation,
         model: {
-          uri: currentModel.url,
+          uri: "./static/1000a.glb",
           shadows: Cesium.ShadowMode.DISABLED,
           color: el_tower.tower_color,
           scale: currentModel.scale,
