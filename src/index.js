@@ -957,15 +957,25 @@ Cesium.sampleTerrainMostDetailed(
       // draw lines
       for (let p = 0; p < lines.length; p++) {
         viewer.entities.add({
+          id: "el_tower_line_111" + p,
+          polyline: {
+            positions: new Cesium.Cartesian3.fromDegreesArrayHeights(
+              lines[p]
+            ),
+            material: Cesium.Color.RED,
+            width: 1,
+            show: true
+          }
+        });
+      
+        viewer.entities.add({
           id: "el_tower_line_" + p,
           polyline: {
             positions: new Cesium.Cartesian3.fromDegreesArrayHeights(
               lines[p]
             ),
-            material: Cesium.Color.fromCssColorString(
-              currentModel.units[p].color
-            ),
-            width: 1,
+            material: Cesium.Color.TRANSPARENT,
+            width: 5,
             show: true
           }
         });

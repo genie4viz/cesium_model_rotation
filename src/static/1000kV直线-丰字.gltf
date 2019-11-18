@@ -1,0 +1,141 @@
+{
+  "accessors": [
+    {
+      "name": "����072_1_0_positions",
+      "componentType": 5126,
+      "count": 73850,
+      "min": [
+        -134.9929962158203,
+        -0.6990000009536743,
+        -80.63200378417969
+      ],
+      "max": [
+        134.10400390625,
+        832.2830200195312,
+        80.63200378417969
+      ],
+      "type": "VEC3",
+      "bufferView": 0,
+      "byteOffset": 0
+    },
+    {
+      "name": "����072_1_0_normals",
+      "componentType": 5126,
+      "count": 73850,
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "type": "VEC3",
+      "bufferView": 1,
+      "byteOffset": 0
+    },
+    {
+      "name": "����072_1_0_indices",
+      "componentType": 5125,
+      "count": 262584,
+      "min": [
+        0
+      ],
+      "max": [
+        73849
+      ],
+      "type": "SCALAR",
+      "bufferView": 2,
+      "byteOffset": 0
+    }
+  ],
+  "asset": {
+    "generator": "obj2gltf",
+    "version": "2.0"
+  },
+  "buffers": [
+    {
+      "uri": "1000kV直线-丰字_data.bin",
+      "byteLength": 2822736
+    }
+  ],
+  "bufferViews": [
+    {
+      "name": "bufferView_0",
+      "buffer": 0,
+      "byteLength": 886200,
+      "byteOffset": 0,
+      "byteStride": 12,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_1",
+      "buffer": 0,
+      "byteLength": 886200,
+      "byteOffset": 886200,
+      "byteStride": 12,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_2",
+      "buffer": 0,
+      "byteLength": 1050336,
+      "byteOffset": 1772400,
+      "target": 34963
+    }
+  ],
+  "materials": [
+    {
+      "name": "01___Default",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.5,
+          0.5,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE",
+      "doubleSided": false
+    }
+  ],
+  "meshes": [
+    {
+      "name": "����072_1",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "����072",
+      "mesh": 0
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}
